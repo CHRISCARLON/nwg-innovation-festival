@@ -1,0 +1,10 @@
+.venv
+poetry.lock
+*secrets.toml
+__pycache__
+/cache
+.DS_Store
+error.log
+pyrightconfig.json
+.ruff_cache
+.streamlit/secrets.toml

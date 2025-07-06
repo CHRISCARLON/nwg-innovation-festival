@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "nwg-innovation-festival"
+version = "0.1.0"
+description = ""
+authors = ["christophercarlon <cmcarleone@gmail.com>"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.11"
+duckdb = "1.2.2"
+geopandas = "0.14.4"
+pandas = "2.2.2"
+openpyxl = "3.1.3"
+streamlit = "^1.35.0"
+streamlit-folium = "0.20.0"
+loguru = "0.7.2"
+osmnx = "1.9.3"
+numpy = "1.26.4"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

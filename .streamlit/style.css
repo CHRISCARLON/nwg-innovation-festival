@@ -1,0 +1,416 @@
+/* Main container */
+.main .block-container {
+  padding: 2rem;
+  max-width: 1200px;
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  font-family: "Segoe UI", Arial, sans-serif !important;
+}
+
+/* Global typography */
+body,
+html,
+div,
+p,
+span,
+a,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+label,
+input,
+button,
+select,
+textarea,
+li,
+ul,
+ol,
+td,
+th,
+code,
+pre {
+  font-family: "Segoe UI", Arial, sans-serif !important;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+  font-smooth: auto !important;
+}
+
+/* Typography */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #1a3c61;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+}
+
+h1 {
+  font-size: 2.4rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid #1f77b4;
+  padding-bottom: 0.5rem;
+}
+
+h2 {
+  font-size: 1.8rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  border-left: 3px solid #1f77b4;
+  padding-left: 0.8rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+  margin-top: 1.2rem;
+  margin-bottom: 0.8rem;
+  color: #2c5282;
+}
+
+p,
+ol,
+ul,
+dl {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #333333;
+}
+
+a {
+  color: #1f77b4;
+  text-decoration: none;
+  font-weight: 500;
+  border-bottom: 1px solid transparent;
+  transition: border-bottom 0.2s ease;
+}
+
+a:hover {
+  border-bottom: 1px solid #1f77b4;
+  background-color: transparent;
+  color: #1a5a8a;
+}
+
+/* Code formatting */
+code,
+pre {
+  font-family: "Consolas", "Monaco", monospace !important;
+  font-size: 0.9rem;
+  background-color: #f8f9fa;
+  padding: 0.2rem 0.4rem;
+  border-radius: 3px;
+  border: 1px solid #e9ecef;
+}
+
+/* Enforce consistent styling in markdown */
+.stMarkdown * {
+  font-family: "Segoe UI", Arial, sans-serif !important;
+}
+
+/* Sidebar styling */
+.sidebar .sidebar-content {
+  background-color: #f8f9fa;
+  padding: 1.5rem;
+  border-right: 1px solid #e0e0e0;
+  color: #333333 !important;
+}
+
+/* Form Elements */
+.stTextInput > div > div > input,
+.stNumberInput > div > div > input,
+.stDateInput > div > div > input,
+.stTextArea > div > div > textarea {
+  border-radius: 4px;
+  border: 1px solid #d0d7de;
+  padding: 0.6rem;
+  font-size: 0.95rem;
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stTextInput > div > div > input:focus,
+.stNumberInput > div > div > input:focus,
+.stDateInput > div > div > input:focus,
+.stTextArea > div > div > textarea:focus {
+  border-color: #1f77b4;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(31, 119, 180, 0.2);
+}
+
+/* Buttons */
+.stButton > button,
+.stButton > button *,
+.stButton > button div,
+.stButton > button span,
+.stButton > button p {
+  color: white !important;
+  background-color: #1f77b4 !important;
+}
+
+.stButton > button:hover,
+.stButton > button:hover *,
+.stButton > button:hover div,
+.stButton > button:hover span,
+.stButton > button:hover p {
+  color: white !important;
+  background-color: #1a5a8a !important;
+}
+
+/* Select box styling */
+.stSelectbox > div {
+  border-radius: 4px;
+}
+
+.stSelectbox > div > div {
+  border-radius: 4px;
+  border: 1px solid #d0d7de;
+  background-color: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stSelectbox > div > div:hover {
+  border-color: #b0b7c0;
+}
+
+.stSelectbox > div > div:focus-within {
+  border-color: #1f77b4;
+  box-shadow: 0 0 0 3px rgba(31, 119, 180, 0.2);
+}
+
+/* Dropdown options styling */
+div[data-baseweb="popover"] div[data-baseweb="menu"] {
+  background-color: white;
+  border: 1px solid #d0d7de;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+}
+
+div[data-baseweb="select"] li:hover {
+  background-color: #f1f5f9 !important;
+}
+
+/* Checkbox */
+.stCheckbox > div > label > div {
+  border-radius: 3px;
+  border: 1px solid #d0d7de;
+}
+
+/* DataFrames/Tables */
+.stDataFrame,
+.dataframe {
+  border-collapse: separate;
+  width: 100%;
+  margin-bottom: 1.5rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.stDataFrame th,
+.dataframe th {
+  background-color: #f1f5f9;
+  color: #1a3c61 !important;
+  font-weight: 600;
+  text-align: left;
+  padding: 0.8rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.stDataFrame td,
+.dataframe td {
+  padding: 0.8rem;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.stDataFrame tr:nth-child(even),
+.dataframe tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+.stDataFrame tr:hover,
+.dataframe tr:hover {
+  background-color: #eef2f7;
+}
+
+/* Maps */
+.folium-map {
+  width: 100% !important;
+  min-height: 600px !important;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  margin-bottom: 1.5rem;
+}
+
+/* Map container responsiveness */
+.stFolium {
+  width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.stFolium > div {
+  width: 100% !important;
+  max-width: 100% !important;
+  left: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.stFolium iframe {
+  width: 100% !important;
+  min-width: 100% !important;
+  min-height: 600px;
+  left: 0 !important;
+  margin: 0 !important;
+  border: none !important;
+}
+
+/* Metrics */
+.stMetric {
+  background-color: #f8f9fa;
+  padding: 1.2rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stMetric:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.stMetric .metric-value {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #1f77b4;
+}
+
+.stMetric .metric-label {
+  color: #4a5568;
+  font-weight: 500;
+}
+
+/* Expander styling */
+.streamlit-expander {
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.streamlit-expander .streamlit-expanderHeader {
+  font-weight: 500;
+  padding: 0.8rem 1rem;
+  background-color: #f8f9fa;
+  color: #1a3c61 !important;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.streamlit-expander .streamlit-expanderContent {
+  padding: 1rem;
+  background-color: #ffffff;
+}
+
+/* Alert boxes */
+.element-container .stAlert {
+  background-color: transparent;
+  border: none;
+}
+
+.element-container .stAlert > div {
+  border: 1px solid #e0e0e0 !important;
+  border-radius: 4px !important;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05) !important;
+  padding: 1rem !important;
+}
+
+.element-container .stAlert.info > div {
+  background-color: #e6f3ff !important;
+  border-left: 4px solid #1f77b4 !important;
+}
+
+.element-container .stAlert.info > div > * {
+  color: #1a3c61 !important;
+}
+
+.element-container .stAlert.warning > div {
+  background-color: #fff8e6 !important;
+  border-left: 4px solid #f0c05a !important;
+}
+
+.element-container .stAlert.error > div {
+  background-color: #ffebee !important;
+  border-left: 4px solid #e53935 !important;
+}
+
+.element-container .stAlert.error > div > * {
+  color: #b71c1c !important;
+}
+
+/* Map tooltips */
+.leaflet-tooltip {
+  background-color: rgba(255, 255, 255, 0.95);
+  border: 1px solid #d0d7de;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  padding: 10px 12px;
+  font-size: 13px;
+  font-weight: normal;
+  font-family: "Segoe UI", Arial, sans-serif !important;
+}
+
+/* Progress bar */
+.stProgress > div > div > div {
+  background-color: #1f77b4 !important;
+  height: 6px !important;
+  border-radius: 3px !important;
+}
+
+.stProgress > div > div {
+  background-color: #e9ecef !important;
+  border: none !important;
+  border-radius: 3px !important;
+  height: 6px !important;
+}
+
+/* Ensure containers take full width */
+.element-container,
+.block-container {
+  max-width: 100% !important;
+}
+
+.row-widget.stHorizontal {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .main .block-container {
+    padding: 1rem;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.6rem;
+  }
+
+  h3 {
+    font-size: 1.3rem;
+  }
+}
