@@ -1,7 +1,6 @@
 import duckdb
 import streamlit as st
 import geopandas as gpd
-import pandas as pd
 
 from loguru import logger
 from .geo_prep import convert_to_geodf

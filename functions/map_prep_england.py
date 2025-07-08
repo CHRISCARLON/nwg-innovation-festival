@@ -1,8 +1,6 @@
 import folium
 import geopandas as gpd
 import streamlit as st
-import pandas as pd
-from branca.colormap import LinearColormap
 from streamlit_folium import folium_static
 from loguru import logger
 
