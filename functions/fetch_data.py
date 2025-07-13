@@ -64,3 +64,28 @@ def fetch_data(highway_authority: str, table_name: str) -> gpd.GeoDataFrame:
         logger.error(f"An error occurred: {e}")
         raise e
 
+@st.cache_data
+def fetch_all_authorities_data(table_name: str) -> gpd.GeoDataFrame:
+    """
+    Fetch DataFrame containing data for all highway authorities and convert to GeoDataFrame
+    """
+    try:
+        con = connect_to_motherduck()
+        schema = st.secrets["schema"]
+        query = f"""
+        SELECT DISTINCT ON (permit_reference_number) *
+        FROM {schema}."{table_name}"
+        WHERE highway_authority IN ('NEWCASTLE CITY COUNCIL', 'SUNDERLAND CITY COUNCIL', 'DARLINGTON BOROUGH COUNCIL', 'DURHAM COUNTY COUNCIL')
+        AND work_status_ref = 'completed'
+        AND event_type = 'WORK_STOP'
+        """
+        result = con.execute(query)
+        df = result.fetchdf()
+        df = convert_to_geodf(df)
+        if df.empty:
+            logger.warning(f"The Dataframe is empty for all authorities")
+        return df
+    except Exception as e:
+        logger.error(f"An error occurred: {e}")
+        raise e
+

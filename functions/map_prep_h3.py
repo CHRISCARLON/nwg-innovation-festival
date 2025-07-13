@@ -44,23 +44,11 @@ def plot_h3_map(geodf: gpd.GeoDataFrame, color_by: str = 'work_count'):
                 color_value = row[color_by]
                 fill_color = colormap(color_value)
                 
-                # Create tooltip with activity types
-                activity_list = row.get('activity_types', [])
-                if isinstance(activity_list, list):
-                    activities_str = '<br>'.join([f"• {act}" for act in activity_list[:5]]) 
-                    if len(activity_list) > 5:
-                        activities_str += f"<br>... and {len(activity_list) - 5} more"
-                else:
-                    activities_str = str(activity_list)
-                
                 tooltip_content = f"""
                 <b>H3 Cell:</b> {row.get('h3_cell', 'N/A')}<br>
                 <b>Total Works:</b> {row.get('work_count', 0)}<br>
                 <b>Unique Permits:</b> {row.get('unique_permits', 0)}<br>
-                <b>Activity Types:</b><br>
-                {activities_str}
                 """
-                
                 folium.GeoJson(
                     row.geometry.__geo_interface__,
                     style_function=lambda x, color=fill_color: {
@@ -76,10 +64,7 @@ def plot_h3_map(geodf: gpd.GeoDataFrame, color_by: str = 'work_count'):
         # Add colormap to map
         colormap.add_to(m)
         
-        # Display map
-        folium_static(m, width=None, height=600)
-        
-        # Show summary statistics
+        # Show summary statistics BEFORE the map
         st.subheader("H3 Grid Summary")
         col1, col2, col3, col4 = st.columns(4)
         
@@ -92,6 +77,9 @@ def plot_h3_map(geodf: gpd.GeoDataFrame, color_by: str = 'work_count'):
             st.metric("Avg Works per Hex", f"{avg_works:.1f}")
         with col4:
             st.metric("Max Works in Hex", int(geodf['work_count'].max())) # type: ignore
+        
+        # Display map
+        folium_static(m, width=None, height=600)
         
         # Show top hexagons by activity
         st.subheader("Most Active Hexagons")

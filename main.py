@@ -1,7 +1,7 @@
 import streamlit as st
-from functions.fetch_data import fetch_data
+from functions.fetch_data import fetch_data, fetch_all_authorities_data
 from functions.map_prep_england import plot_map_england
-from functions.h3_processing import create_h3_hex_grid, get_h3_resolution_info
+from functions.h3_processing import create_h3_hex_grid, create_h3_hex_grid_all_authorities, get_h3_resolution_info
 from functions.map_prep_h3 import plot_h3_map
 
 # Set page config as wide by default
@@ -19,10 +19,11 @@ def main():
     Streamlit Application Launch
     """
     st.title("Explore Street Works Data")
-    st.markdown("#### Select a highway authority and month, then choose visualization type.")
+    st.markdown("#### Select a highway authority and month, then choose a visualisation type.")
 
     # Highway authority options
     highway_authorities = [
+        "All Authorities",
         "NEWCASTLE CITY COUNCIL",
         "SUNDERLAND CITY COUNCIL", 
         "DARLINGTON BOROUGH COUNCIL",
@@ -87,7 +88,10 @@ def main():
             table_name = months[selected_month]
             
             if vis_type == "Points/Lines":
-                geodf = fetch_data(selected_authority, table_name)
+                if selected_authority == "All Authorities":
+                    geodf = fetch_all_authorities_data(table_name)
+                else:
+                    geodf = fetch_data(selected_authority, table_name)
                 
                 if not geodf.empty:
                     st.success(f"Loaded {len(geodf)} records for {selected_authority} - {selected_month}")
@@ -96,7 +100,11 @@ def main():
                     st.warning(f"No data available for {selected_authority} - {selected_month}")
             
             else:  # H3 Hex Grid
-                geodf = create_h3_hex_grid(selected_authority, table_name, resolution)
+                if selected_authority == "All Authorities":
+                    geodf = create_h3_hex_grid_all_authorities(table_name, resolution)
+                else:
+                    geodf = create_h3_hex_grid(selected_authority, table_name, resolution)
+                
                 if not geodf.empty:
                     total_works = int(geodf['work_count'].sum()) # type: ignore
                     st.success(f"Generated {len(geodf)} hexagons with {total_works} total works for {selected_authority} - {selected_month}")

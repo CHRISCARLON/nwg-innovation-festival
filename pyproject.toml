@@ -17,6 +17,7 @@ streamlit-folium = "0.20.0"
 loguru = "0.7.2"
 osmnx = "1.9.3"
 numpy = "1.26.4"
+watchdog = "^6.0.0"
 
 
 [build-system]
