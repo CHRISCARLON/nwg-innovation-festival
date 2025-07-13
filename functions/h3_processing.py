@@ -2,6 +2,7 @@ import duckdb
 import streamlit as st
 import geopandas as gpd
 import pandas as pd
+from typing import Optional, List
 
 from .fetch_data import fetch_data, fetch_all_authorities_data
 from loguru import logger
@@ -22,7 +23,7 @@ def get_h3_resolution_info():
     }
 
 @st.cache_data
-def create_h3_hex_grid(highway_authority: str, table_name: str, resolution: int = 9) -> gpd.GeoDataFrame:
+def create_h3_hex_grid(highway_authority: str, table_name: str, resolution: int = 9, selected_categories: Optional[List[str]] = None) -> gpd.GeoDataFrame:
     """
     Create H3 hexagonal grid from street works data using Python processing
     
@@ -30,13 +31,13 @@ def create_h3_hex_grid(highway_authority: str, table_name: str, resolution: int 
         highway_authority: The highway authority to filter data for
         table_name: The table name to query
         resolution: H3 resolution level (0-15, higher = smaller hexes)
-                   9 is good for city-level analysis (~105m avg edge length)
+        selected_categories: List of normalized work categories to include
     
     Returns:
         GeoDataFrame with H3 hexagons and aggregated data
     """
     try:
-        geodf_points = fetch_data(highway_authority, table_name)
+        geodf_points = fetch_data(highway_authority, table_name, selected_categories)
         
         if geodf_points.empty:
             logger.warning(f"No point data found for {highway_authority}")
@@ -58,6 +59,7 @@ def create_h3_hex_grid(highway_authority: str, table_name: str, resolution: int 
                 coords_data.append({
                     'permit_reference_number': row.get('permit_reference_number'),
                     'activity_type': row.get('activity_type'),
+                    'work_category': row.get('normalized_work_category', 'Unknown'),
                     'latitude': lat,
                     'longitude': lon
                 })
@@ -86,6 +88,7 @@ def create_h3_hex_grid(highway_authority: str, table_name: str, resolution: int 
                 h3_latlng_to_cell_string(latitude, longitude, {resolution}) as h3_cell,
                 permit_reference_number,
                 activity_type,
+                work_category,
                 latitude,
                 longitude
             FROM coords_data
@@ -100,6 +103,7 @@ def create_h3_hex_grid(highway_authority: str, table_name: str, resolution: int 
                 COUNT(*) as work_count,
                 COUNT(DISTINCT permit_reference_number) as unique_permits,
                 LIST(DISTINCT activity_type) as activity_types,
+                LIST(DISTINCT work_category) as work_categories,
                 AVG(latitude) as center_lat,
                 AVG(longitude) as center_lng
             FROM h3_cells
@@ -110,6 +114,7 @@ def create_h3_hex_grid(highway_authority: str, table_name: str, resolution: int 
             work_count,
             unique_permits,
             activity_types,
+            work_categories,
             center_lat,
             center_lng,
             h3_cell_to_boundary_wkt(h3_string_to_h3(h3_cell)) as hex_geometry
@@ -141,12 +146,12 @@ def create_h3_hex_grid(highway_authority: str, table_name: str, resolution: int 
         raise e
 
 @st.cache_data
-def create_h3_hex_grid_all_authorities(table_name: str, resolution: int = 9) -> gpd.GeoDataFrame:
+def create_h3_hex_grid_all_authorities(table_name: str, resolution: int = 9, selected_categories: Optional[List[str]] = None) -> gpd.GeoDataFrame:
     """
     Create H3 hexagonal grid from all highway authorities data
     """
     try:
-        geodf_points = fetch_all_authorities_data(table_name)
+        geodf_points = fetch_all_authorities_data(table_name, selected_categories)
         
         if geodf_points.empty:
             return gpd.GeoDataFrame()
@@ -167,6 +172,7 @@ def create_h3_hex_grid_all_authorities(table_name: str, resolution: int = 9) -> 
                 coords_data.append({
                     'permit_reference_number': row.get('permit_reference_number'),
                     'activity_type': row.get('activity_type'),
+                    'work_category': row.get('normalized_work_category', 'Unknown'),
                     'latitude': lat,
                     'longitude': lon
                 })
@@ -195,6 +201,7 @@ def create_h3_hex_grid_all_authorities(table_name: str, resolution: int = 9) -> 
                 h3_latlng_to_cell_string(latitude, longitude, {resolution}) as h3_cell,
                 permit_reference_number,
                 activity_type,
+                work_category,
                 latitude,
                 longitude
             FROM coords_data
@@ -209,6 +216,7 @@ def create_h3_hex_grid_all_authorities(table_name: str, resolution: int = 9) -> 
                 COUNT(*) as work_count,
                 COUNT(DISTINCT permit_reference_number) as unique_permits,
                 LIST(DISTINCT activity_type) as activity_types,
+                LIST(DISTINCT work_category) as work_categories,
                 AVG(latitude) as center_lat,
                 AVG(longitude) as center_lng
             FROM h3_cells
@@ -219,6 +227,7 @@ def create_h3_hex_grid_all_authorities(table_name: str, resolution: int = 9) -> 
             work_count,
             unique_permits,
             activity_types,
+            work_categories,
             center_lat,
             center_lng,
             h3_cell_to_boundary_wkt(h3_string_to_h3(h3_cell)) as hex_geometry
