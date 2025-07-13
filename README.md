@@ -1,19 +1,50 @@
-# Street Works Data Explorer
+# Street Works Hex Grid Explorer
 
-A Streamlit application for exploring street works data from multiple highway authorities in the North East of England.
+A Streamlit application for exploring street works data from multiple highway authorities in the North East of England using H3 hexagonal grids for spatial analysis.
 
 ## Overview
 
-This app allows you to visualise completed street works data on an interactive map.
+This app visualises completed street works data using H3 hexagonal grids.
 
-You can filter by highway authority and month to explore different datasets.
+Street works are grouped into hexagonal cells at various resolution levels, allowing you to explore patterns and density across different geographical scales.
 
 ## Features
 
-- **Interactive Map**: View street works locations on a map with tooltips showing permit details
-- **Multiple Authorities**: Choose from Newcastle, Sunderland, Darlington, or Durham
+### H3 Hexagonal Grid Analysis
+
+- **Multi-Resolution Grids**: Choose from 6 different H3 resolution levels (6-11) ranging from regional (~3.2km) to street-level (~25m) detail
+- **Spatial Aggregation**: Street works are aggregated into hexagonal cells showing work counts and unique permits
+- **Interactive Visualisation**: Color-coded hexagons with tooltips showing detailed statistics
+- **Activity Analysis**: View the most active hexagons and activity type distributions
+
+### Data Visualisation Options
+
+- **H3 Hex Grid** (Default): Advanced hexagonal spatial analysis with configurable resolution
+- **Points/Lines**: Traditional point and line visualisation for raw data exploration
+
+### Multi-Authority Support
+
+- **Individual Authorities**: Newcastle, Sunderland, Darlington, Durham County Council
+- **Combined Analysis**: "All Authorities" option for regional overview
 - **Monthly Data**: Select data from January to June 2025
-- **Data Table**: View raw data below the map
+
+### Interactive Features
+
+- **Color Coding**: Choose to color hexagons by total work count or unique permits
+- **Summary Statistics**: Real-time metrics showing hexagon counts, work totals, and averages
+- **Top Hexagons**: Table showing the most active hexagonal areas
+- **Responsive Maps**: Auto-fitting maps with detailed tooltips
+
+## H3 Resolution Levels
+
+| Level | Average Edge | Description  | Best For                      |
+| ----- | ------------ | ------------ | ----------------------------- |
+| 6     | ~3.2km       | Regional     | City-wide patterns            |
+| 7     | ~1.2km       | District     | Area analysis                 |
+| 8     | ~460m        | Locality     | Standard resolution (default) |
+| 9     | ~170m        | Neighborhood | Detailed view                 |
+| 10    | ~65m         | Block        | High detail                   |
+| 11    | ~25m         | Street       | Maximum detail                |
 
 ## Setup
 
@@ -54,18 +85,40 @@ You can filter by highway authority and month to explore different datasets.
 
 ## Usage
 
-1. Select a highway authority from the dropdown
-2. Choose a month (January - June 2025)
-3. Click the "Load Data" button
-4. Explore the map and data table below
+1. **Select Highway Authority**: Choose from individual councils or "All Authorities"
+2. **Choose Month**: Select data from January to June 2025
+3. **Pick Visualisation**: Choose "H3 Hex Grid" (recommended) or "Points/Lines"
+4. **Configure H3 Settings** (for hex grid):
+   - Select grid resolution level (6-11)
+   - Choose color coding (work count or unique permits)
+5. **Load Data**: Click the load button to generate the visualization
+6. **Explore Results**:
+   - View summary statistics
+   - Interact with the color-coded map
+   - Examine top active hexagons
 
-## Data
+## Data Processing
 
-The app displays completed street works where:
+The app processes completed street works data with the following filters:
 
 - Work status = 'completed'
 - Event type = 'WORK_STOP'
 - Data is deduplicated by permit reference number
+
+For H3 analysis, the app:
+
+- Converts point/line geometries to centroids
+- Maps coordinates to H3 hexagonal cells
+- Aggregates work counts and unique permits per hexagon
+- Generates hexagon boundaries for visualization
+
+## Technical Stack
+
+- **Frontend**: Streamlit with Folium for interactive maps
+- **Spatial Processing**: H3 hexagonal indexing system via DuckDB
+- **Data Processing**: GeoPandas, Pandas
+- **Database**: MotherDuck (cloud DuckDB)
+- **Mapping**: Folium with custom styling and tooltips
 
 ## Requirements
 
@@ -73,3 +126,4 @@ The app displays completed street works where:
 - uv (for virtual environment)
 - Poetry (for dependency management)
 - MotherDuck database access
+- DuckDB with H3 extension support
